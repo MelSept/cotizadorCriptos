@@ -22,6 +22,7 @@ const InputSubmit = styled.input`
   }
 `;
 
+//componente funcional Formulario
 const Formulario = ({ setMonedas }) => {
   const monedas = [
     { id: "USD", nombre: "Dolar Estado Unidense" },
@@ -29,14 +30,21 @@ const Formulario = ({ setMonedas }) => {
     { id: "ARS", nombre: "Peso Argentino" },
     { id: "EUR", nombre: "Euro" },
   ];
+
+  //useState es el hook de react
   const [criptos, setCriptos] = useState([]);
   const [error, setError] = useState(false);
+
+  //useSelectMonedas es un custom hook. Creado por mi
 
   const [moneda, SelectMonedas] = useSelectMonedas("Elige tu moneda", monedas);
   const [criptomoneda, SelectCriptomoneda] = useSelectMonedas(
     "Elige tu CriptoMoneda",
     criptos
   );
+
+  //useEffect es creado por react
+  //para poder usar await necesito poner async (asincronico) en la funcion
 
   useEffect(() => {
     const consultarAPI = async () => {
