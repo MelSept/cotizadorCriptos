@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
-import Formulario from "./components/Formulario/Formulario";
-import Resultado from "./components/Resultado/Resultado";
+import Formulary from "./components/Formulary/Formulary";
+import Result from "./components/Result/Result";
 import Spinner from "./components/Spinner/Spinner";
 import ImageCripto from "./assets/images/imagen-criptos.png";
 
-const Contenedor = styled.div`
+const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
   width: 90%;
@@ -43,41 +43,41 @@ const Heading = styled.h1`
 `;
 
 function App() {
-  const [monedas, setMonedas] = useState({});
-  const [resultado, setResultado] = useState({});
-  const [cargando, setCargando] = useState(false);
+  const [coins, setCoins] = useState({});
+  const [result, setResult] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("las monedas cambiaron");
-    if (Object.keys(monedas).length > 0) {
-      const cotizarCripto = async () => {
-        setCargando(true);
-        setResultado({});
-        const { moneda, criptomoneda } = monedas;
-        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+    if (Object.keys(coins).length > 0) {
+      const quoteCrypto = async () => {
+        setLoading(true);
+        setResult({});
+        const { coin, cryptocurrency } = coins;
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptocurrency}&tsyms=${coin}`;
 
-        const respuesta = await fetch(url);
-        const resultado = await respuesta.json();
+        const response = await fetch(url);
+        const result = await response.json();
 
-        setResultado(resultado.DISPLAY[criptomoneda][moneda]);
-        setCargando(false);
+        setResult(result.DISPLAY[cryptocurrency][coin]);
+        setLoading(false);
       };
-      cotizarCripto();
+      quoteCrypto();
     }
-  }, [monedas]);
+  }, [coins]); //lista de dependencias, si una de ellas cambia se ejecuta de nuevo.
 
   return (
-    <Contenedor>
+    <Container>
       <Image src={ImageCripto} alt="imagen criptomonedas" />
 
       <div>
         <Heading>Cotiza Criptomonedas al Instante</Heading>
-        <Formulario setMonedas={setMonedas} />
+        <Formulary setCoins={setCoins} />
 
-        {cargando && <Spinner />}
-        {resultado.PRICE && <Resultado resultado={resultado} />}
+        {loading && <Spinner />}
+        {result.PRICE && <Result result={result} />}
       </div>
-    </Contenedor>
+    </Container>
   );
 }
 

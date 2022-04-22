@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const Texto = styled.div`
+const Text = styled.div`
   background-color: #b7322c;
   color: #fff;
   padding: 15px;
@@ -12,7 +12,7 @@ const Texto = styled.div`
 `;
 
 const Error = ({ children }) => {
-  return <Texto>{children}</Texto>;
+  return <Text>{children}</Text>;
 };
 
 export default Error;
